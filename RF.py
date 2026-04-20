@@ -4,7 +4,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 Aearth=5.1e14 # m2
-RE_co2_ppb, RE_n2o_ppb, RE_ch4_ppb=1.33e-5, 38.8e-5, 32e-5 # IPCC AR6 file:///Z:/NO%20flux.Data/IPCC_AR6_WGI_Chapter07_SM.pdf
+RE_co2_ppb, RE_n2o_ppb, RE_ch4_ppb=1.33e-5, 38.8e-5, 32e-5 # IPCC AR6, The Earth’s Energy Budget, Climate Feedbacks and Climate Sensitivity Supplementary Material"
 # Matm=5.135e18 kg, mair_avearge=28.965e-3 kg/mol
 co2_kg_ppb, n2o_kg_ppb, ch4_kg_ppb=7.80e9, 2.84e9, 7.80e9 #kg/ppb
 RE_co2_kg, RE_n2o_kg, RE_ch4_kg=RE_co2_ppb/co2_kg_ppb, RE_n2o_ppb/n2o_kg_ppb, RE_ch4_ppb/ch4_kg_ppb # W/m2/kg
