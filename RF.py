@@ -9,7 +9,7 @@ RE_co2_ppb, RE_n2o_ppb, RE_ch4_ppb=1.33e-5, 38.8e-5, 32e-5 # IPCC AR6, The Earth
 co2_kg_ppb, n2o_kg_ppb, ch4_kg_ppb=7.80e9, 2.84e9, 7.80e9 #kg/ppb
 RE_co2_kg, RE_n2o_kg, RE_ch4_kg=RE_co2_ppb/co2_kg_ppb, RE_n2o_ppb/n2o_kg_ppb, RE_ch4_ppb/ch4_kg_ppb # W/m2/kg
 # scale to local by distriuting total eneryg to local
-RE_co2_site, RE_n2o_site, RE_ch4_site=RE_co2_kg*Aearth, RE_n2o_kg*Aearth, RE_ch4_kg*Aearth # W/kg 
+RE_co2_mass, RE_n2o_mass, RE_ch4_mass=RE_co2_kg*Aearth, RE_n2o_kg*Aearth, RE_ch4_kg*Aearth # W/kg 
 
 def irf_co2(years):
     # IRF parameters: using AR6-like multi-exponential (example from dynamic_characterization)
@@ -72,14 +72,14 @@ forest_kgCO2 = forest_gC * (M_CO2 / M_C)* kg_per_g #kg co2/m2 (forest)
 rf_forest = np.zeros(len(age_new))
 for t in range(len(age_new)):
     for i in range(t + 1):
-        rf_forest[t] += forest_kgCO2[i] * irf_vals[t - i]*RE_co2_site
+        rf_forest[t] += forest_kgCO2[i] * irf_vals[t - i]*RE_co2_mass
         
 grass_gC = cstock["nep_grass"].values
 grass_kgCO2 = grass_gC * (M_CO2 / M_C)* kg_per_g
 rf_grass = np.zeros(len(age_new))
 for t in range(len(age_new)):
     for i in range(t + 1):
-        rf_grass[t] += grass_kgCO2[i] * irf_vals[t - i]*RE_co2_site
+        rf_grass[t] += grass_kgCO2[i] * irf_vals[t - i]*RE_co2_mass
 rf_net = rf_forest - rf_grass    
 
 cstock["rf_forest"] = rf_forest
@@ -110,13 +110,13 @@ forest_kgN2O = nstock['n2o_forest'] #kg co2/m2 (forest)
 rf_forest = np.zeros(len(age))
 for t in range(len(age)):
     for i in range(t + 1):
-        rf_forest[t] += forest_kgN2O[i] * irf_vals[t - i]*RE_n2o_site
+        rf_forest[t] += forest_kgN2O[i] * irf_vals[t - i]*RE_n2o_mass
   
 grass_kgN2O = nstock['n2o_grass'] #kg co2/m2 (forest)
 rf_grass = np.zeros(len(age))
 for t in range(len(age)):
     for i in range(t + 1):
-        rf_grass[t] += grass_kgN2O[i] * irf_vals[t - i]*RE_n2o_site
+        rf_grass[t] += grass_kgN2O[i] * irf_vals[t - i]*RE_n2o_mass
 
 rf_net = rf_forest - rf_grass    
 nstock["rf_forest"] = rf_forest
@@ -147,13 +147,13 @@ forest_kgch4 = ch4stock['ch4_forest'] #kg co2/m2 (forest)
 rf_forest = np.zeros(len(age))
 for t in range(len(age)):
     for i in range(t + 1):
-        rf_forest[t] += forest_kgch4[i] * irf_vals[t - i]*RE_ch4_site
+        rf_forest[t] += forest_kgch4[i] * irf_vals[t - i]*RE_ch4_mass
   
 grass_kgch4 = ch4stock['ch4_grass'] #kg co2/m2 (forest)
 rf_grass = np.zeros(len(age))
 for t in range(len(age)):
     for i in range(t + 1):
-        rf_grass[t] += grass_kgch4[i] * irf_vals[t - i]*RE_ch4_site
+        rf_grass[t] += grass_kgch4[i] * irf_vals[t - i]*RE_ch4_mass
 
 rf_net = rf_forest - rf_grass    
 ch4stock["rf_forest"] = rf_forest
